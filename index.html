@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valentine?</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #252423;
+        color: white;
+      }
+
+      #app {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #yes,
+      #no {
+        background-color: #00a838;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      #no {
+        background-color: #ff6347;
+      }
+
+      #valentine-image-container {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #valentine-image {
+        width: 300px;
+        height: auto;
+        margin-top: 20px;
+      }
+
+      #yaay-text {
+        font-size: 24px;
+        margin-top: 10px;
+        color: rgb(255, 255, 255);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Will you be my Valentine?</h1>
+      <label id="valentine-image-container">
+        <img id="valentine-image" src="boo.gif" alt="Valentine Image" />
+        <div id="yaay-text"></div>
+      </label>
+      <label>
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+      </label>
+    </div>
+
+    <script>
+      const yesBtn = document.getElementById('yes');
+      const noBtn = document.getElementById('no');
+      const valentineImageContainer = document.getElementById(
+        'valentine-image-container'
+      );
+      const valentineImage = document.getElementById('valentine-image');
+      const yaayText = document.getElementById('yaay-text');
+      const h1 = document.querySelector('h1');
+      const buttonTexts = [
+        'How could you?',
+        'Are you sure?',
+        'Reeaaaaly?',
+        'Think again.',
+        'Not in this lifetime.',
+        'Nuh-uh!',
+        'Give it up!',
+        'No way!',
+      ];
+      let currentTextIndex = 0;
+      let clickCount = 0;
+
+      noBtn.addEventListener('click', function handleClickNo() {
+        noBtn.innerHTML = buttonTexts[currentTextIndex];
+        if (clickCount < 8) {
+          // If not the 8th click, change text
+          noBtn.innerHTML = buttonTexts[currentTextIndex];
+          clickCount++;
+          currentTextIndex = (currentTextIndex + 1) % buttonTexts.length;
+        } else {
+          // After 8 changes, stay on the 8th text
+          noBtn.innerHTML = buttonTexts[7];
+        }
+        // Increase font size of the "Yes" button up to 12 clicks
+        if (clickCount < 12) {
+          const currentFontSize = parseFloat(
+            window.getComputedStyle(yesBtn).fontSize
+          );
+          yesBtn.style.fontSize = currentFontSize + 20 + 'px';
+          clickCount++;
+        }
+
+        valentineImageContainer.style.display = 'none';
+        yaayText.innerText = '';
+      });
+
+      yesBtn.addEventListener('click', function handleClickYes() {
+        valentineImageContainer.style.display = 'flex';
+        yaayText.innerText = 'Yaaaaay!';
+        yesBtn.style.display = 'none';
+        noBtn.style.display = 'none';
+        h1.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>
